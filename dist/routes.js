@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.appRoutes = void 0;
+const express_1 = require("express");
+const auth_routes_1 = require("./modules/auth/auth.routes");
+const users_routes_1 = require("./modules/users/users.routes");
+const drivers_routes_1 = require("./modules/drivers/drivers.routes");
+const riders_routes_1 = require("./modules/riders/riders.routes");
+const subscriptions_routes_1 = require("./modules/subscriptions/subscriptions.routes");
+const trips_routes_1 = require("./modules/trips/trips.routes");
+const earnings_routes_1 = require("./modules/earnings/earnings.routes");
+const router = (0, express_1.Router)();
+router.get("/health", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+router.use("/auth", auth_routes_1.authRoutes);
+router.use("/users", users_routes_1.usersRoutes);
+router.use("/drivers", drivers_routes_1.driversRoutes);
+router.use("/riders", riders_routes_1.ridersRoutes);
+router.use("/subscriptions", subscriptions_routes_1.subscriptionsRoutes);
+router.use("/trips", trips_routes_1.tripsRoutes);
+router.use("/earnings", earnings_routes_1.earningsRoutes);
+exports.appRoutes = router;

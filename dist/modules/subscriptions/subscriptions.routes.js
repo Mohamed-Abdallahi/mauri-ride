@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.subscriptionsRoutes = void 0;
+const express_1 = require("express");
+const subscriptions_controller_1 = require("./subscriptions.controller");
+const validate_middleware_1 = require("../../middleware/validate.middleware");
+const subscriptions_validation_1 = require("./subscriptions.validation");
+const async_handler_1 = require("../../utils/async-handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.post("/", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("DRIVER"), (0, validate_middleware_1.validate)(subscriptions_validation_1.createSubscriptionSchema), (0, async_handler_1.asyncHandler)(subscriptions_controller_1.subscriptionsController.createOrRenew));
+exports.subscriptionsRoutes = router;

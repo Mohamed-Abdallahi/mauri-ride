@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ridersRoutes = void 0;
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const validate_middleware_1 = require("../../middleware/validate.middleware");
+const riders_validation_1 = require("./riders.validation");
+const async_handler_1 = require("../../utils/async-handler");
+const riders_controller_1 = require("./riders.controller");
+const router = (0, express_1.Router)();
+router.get("/me/trips", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("RIDER"), (0, validate_middleware_1.validate)(riders_validation_1.riderTripsSchema), (0, async_handler_1.asyncHandler)(riders_controller_1.ridersController.listMyTrips));
+exports.ridersRoutes = router;

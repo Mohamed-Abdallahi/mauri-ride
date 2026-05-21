@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tripsRoutes = void 0;
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const async_handler_1 = require("../../utils/async-handler");
+const validate_middleware_1 = require("../../middleware/validate.middleware");
+const trips_validation_1 = require("./trips.validation");
+const trips_controller_1 = require("./trips.controller");
+const router = (0, express_1.Router)();
+router.post("/request", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("RIDER"), (0, validate_middleware_1.validate)(trips_validation_1.requestRideSchema), (0, async_handler_1.asyncHandler)(trips_controller_1.tripsController.requestRide));
+router.post("/:tripId/cancel", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("RIDER"), (0, async_handler_1.asyncHandler)(trips_controller_1.tripsController.cancelRide));
+router.post("/:tripId/start", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("DRIVER"), (0, async_handler_1.asyncHandler)(trips_controller_1.tripsController.startTrip));
+router.post("/:tripId/complete", auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("DRIVER"), (0, validate_middleware_1.validate)(trips_validation_1.completeTripSchema), (0, async_handler_1.asyncHandler)(trips_controller_1.tripsController.completeTrip));
+exports.tripsRoutes = router;

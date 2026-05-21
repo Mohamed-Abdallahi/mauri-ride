@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.driversRoutes = void 0;
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const async_handler_1 = require("../../utils/async-handler");
+const validate_middleware_1 = require("../../middleware/validate.middleware");
+const drivers_controller_1 = require("./drivers.controller");
+const drivers_validation_1 = require("./drivers.validation");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.requireAuth, (0, auth_middleware_1.requireRole)("DRIVER"));
+router.post("/go-online", (0, async_handler_1.asyncHandler)(drivers_controller_1.driversController.goOnline));
+router.post("/go-offline", (0, async_handler_1.asyncHandler)(drivers_controller_1.driversController.goOffline));
+router.post("/location", (0, validate_middleware_1.validate)(drivers_validation_1.updateLocationSchema), (0, async_handler_1.asyncHandler)(drivers_controller_1.driversController.updateLocation));
+exports.driversRoutes = router;
