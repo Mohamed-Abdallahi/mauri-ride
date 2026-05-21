@@ -28,4 +28,5 @@ Thumbs.db
 
 # Local tooling folders
 .sixth/
-node_modules
+node_modules/
+dist/
